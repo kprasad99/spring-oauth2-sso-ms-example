@@ -1,0 +1,32 @@
+version: '3.5'
+
+services:
+  k-db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: my-pass
+      MYSQL_DATABASE: mydb
+    ports:
+      - 3306:3306
+    networks:
+      - k-network
+  auth-server:
+    image: auth-server
+    build: ./auth-server
+    restart: on-failure
+    ports:
+      - 8185:8080
+    networks:
+      - k-network
+    depends_on:
+      - "k-db"
+      - "k-redis"
+    environment:
+      - spring.datasource.url=jdbc:mysql://k-db:3306/mydb?useSSL=false
+      - spring.datasource.username=root
+      - spring.datasource.password=my-pass
+
+networks:
+  k-network:
