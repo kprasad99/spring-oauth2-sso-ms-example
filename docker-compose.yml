@@ -22,7 +22,6 @@ services:
       - k-network
     depends_on:
       - "k-db"
-      - "k-redis"
     environment:
       - spring.datasource.url=jdbc:mysql://k-db:3306/mydb?useSSL=false
       - spring.datasource.username=root
