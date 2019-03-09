@@ -26,6 +26,13 @@ services:
       - spring.datasource.url=jdbc:mysql://k-db:3306/mydb?useSSL=false
       - spring.datasource.username=root
       - spring.datasource.password=my-pass
-
+  resource-server1:
+    image: resource-server1
+    build: ./resource-server1
+    restart: on-failure
+    ports:
+      - 8186:8181
+    networks:
+      - k-network
 networks:
   k-network:
