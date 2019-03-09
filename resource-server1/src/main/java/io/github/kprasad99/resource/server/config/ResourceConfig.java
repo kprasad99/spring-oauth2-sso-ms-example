@@ -1,4 +1,4 @@
-package io.github.kprasad99.auth.server.config;
+package io.github.kprasad99.resource.server.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,7 +15,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.anonymous().disable().authorizeRequests().antMatchers("/userinfo").authenticated().and().authorizeRequests().antMatchers("/login", "/oauth/token", "/oauth/**").permitAll().and()
+		http.anonymous().disable().authorizeRequests().antMatchers("/resource1").authenticated().and().authorizeRequests().antMatchers("/login", "/oauth/token", "/oauth/**").permitAll().and()
 				.exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler()).and().csrf().disable();
 	}
 }

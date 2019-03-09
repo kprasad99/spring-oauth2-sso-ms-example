@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,32 +26,37 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private DataSource dataSource;
-	
+
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
 
 		/**
-		clients.inMemory ()
-	     .withClient ("client")
-	             .authorizedGrantTypes ("password", "authorization_code", "refresh_token", "implicit")
-	             .authorities ("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "USER")
-	             .scopes ("read", "write")
-	             .autoApprove (true)        
-	             .secret (passwordEncoder.encode ("password"));
-	   **/
+		 * clients.inMemory () .withClient ("client") .authorizedGrantTypes ("password",
+		 * "authorization_code", "refresh_token", "implicit") .authorities
+		 * ("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "USER") .scopes ("read", "write")
+		 * .autoApprove (true) .secret (passwordEncoder.encode ("password"));
+		 **/
 	}
-	
+
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore());
 	}
-	
+
 	@Bean
 	public TokenStore tokenStore() {
 		return new InMemoryTokenStore();
+	}
+
+	@Bean
+	public PrincipalExtractor principalExtractor() {
+		return (e) -> {
+			System.out.println(e);
+			return e;
+		};
 	}
 }

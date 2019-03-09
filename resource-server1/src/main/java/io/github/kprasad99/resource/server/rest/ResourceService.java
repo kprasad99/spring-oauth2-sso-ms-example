@@ -1,13 +1,13 @@
-package io.github.kprasad99.auth.server.rest;
+package io.github.kprasad99.resource.server.rest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Helloworld {
+public class ResourceService {
 
-	@GetMapping("/hello")
+	@GetMapping("/resource1")
 	public String hello() {
-		return "Hello from REST";
+		return "Hello from Resource-1";
 	}
 }

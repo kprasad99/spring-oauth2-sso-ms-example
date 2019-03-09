@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// @formatter:off
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
+		http.anonymous().disable().authorizeRequests().antMatchers("/user").authenticated();
 	}
 
 	@Override
