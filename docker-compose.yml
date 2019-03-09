@@ -34,5 +34,13 @@ services:
       - 8186:8181
     networks:
       - k-network
+  resource-server2:
+    image: resource-server2
+    build: ./resource-server2
+    restart: on-failure
+    ports:
+      - 8187:8182
+    networks:
+      - k-network
 networks:
   k-network:

@@ -19,6 +19,15 @@ An example of spring cloud Oauth2 with SSO for Microservices
 ![Retrieval of Oauth token](https://github.com/kprasad99/myfirstrepo/blob/master/images/oauth2_authorization.png "Basic Auth section") 
 ![Retrieval of Oauth token](https://github.com/kprasad99/myfirstrepo/blob/master/images/oauth_body.png "Body section")
 
-* Use the oauth token retrieved in the previous step to access hello uri by passing bearer token in authorization section as shown below.
+* Use the oauth token retrieved in the previous step to access resource1 uri of resource server1 by passing bearer token in authorization section as shown below. However for resource2 of server2 if you try to access using user you will get access denied error, only admin user can access resource2. 
 
  ![Retrieval of Oauth token](https://github.com/kprasad99/myfirstrepo/blob/master/images/oauth_get.png "Get request with Bearer token")
+ 
+ * Alternatively you can directly use oauth2 authorization in postman and click on get new access token as shown below instead of two steps given above.
+ 
+ 
+![Retrieval of Oauth token](https://github.com/kprasad99/myfirstrepo/blob/master/images/oauth2_single_step_1.png "Single step 1") 
+![Retrieval of Oauth token](https://github.com/kprasad99/myfirstrepo/blob/master/images/oauth_2_single_step_2.png "Single step 2")
+![Retrieval of Oauth token](https://github.com/kprasad99/myfirstrepo/blob/master/images/oauth2_single_step_3.png "Single step 3")
+
+ 

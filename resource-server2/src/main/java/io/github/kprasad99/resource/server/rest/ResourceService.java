@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ResourceService {
 
-	@GetMapping(value="/resource1", produces=MediaType.TEXT_PLAIN_VALUE)
+	@GetMapping(value="/resource2", produces=MediaType.TEXT_PLAIN_VALUE)
 	public String hello() {
-		return "Hello from Resource-1";
+		return "Hello from Resource-2";
 	}
 }
