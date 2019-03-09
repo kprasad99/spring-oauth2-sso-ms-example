@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 @EnableResourceServer
 @EnableOAuth2Client
 public class ResourceConfig extends ResourceServerConfigurerAdapter {
-
+	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.anonymous().disable().authorizeRequests().antMatchers("/resource2").hasRole("ADMIN").and()

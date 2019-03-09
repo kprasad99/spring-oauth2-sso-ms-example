@@ -1,0 +1,6 @@
+#security:
+#  oauth2:
+#    authorization:
+#      jwt:
+#        key-value: "123"
+        

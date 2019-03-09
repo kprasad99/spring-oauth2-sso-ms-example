@@ -10,3 +10,5 @@ security:
       client-authentication-scheme: form
     resource:
       user-info-uri: http://localhost:8080/userinfo
+      jwt:
+        key-value: "12345"

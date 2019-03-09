@@ -3,7 +3,10 @@ package io.github.kprasad99.auth.server.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +16,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Configuration
 @EnableWebSecurity
+@Order(SecurityProperties.IGNORED_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -33,7 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// @formatter:off
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.anonymous().disable().authorizeRequests().antMatchers("/user").authenticated();
+		http.authorizeRequests().antMatchers("/userinfo").authenticated().and().authorizeRequests()
+				.antMatchers("/login", "/oauth/token", "/oauth/**").permitAll().and().formLogin().and().csrf()
+				.disable();
 	}
 
 	@Override
@@ -43,7 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.usersByUsernameQuery("select username,password,enabled from TBL_USERS where username = ?")
 				.authoritiesByUsernameQuery(
 						"select username, role as authority from TBL_USER_ROLES where username = ?");
-
 	}
 
 	@Bean
