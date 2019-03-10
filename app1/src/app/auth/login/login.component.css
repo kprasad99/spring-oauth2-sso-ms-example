@@ -1,0 +1,23 @@
+
+.login-form {
+    min-width: 150px;
+    max-width: 250px;
+    width: 100%;
+  }
+  
+  .login-field-full-width {
+    width: 100%;
+  }
+  
+
+  .login-logo {
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+  }
+
+  .login-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 5px;
+  }

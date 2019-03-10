@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserInfo {
 
-	@GetMapping("/userinfo")
+	@GetMapping(value="/userinfo")
 	public Map<String, Object> user(@AuthenticationPrincipal Principal principal) {
 		if (principal != null) {
 	       return Map.of("name", principal.getName(), "authorities", SecurityContextHolder.getContext().getAuthentication().getAuthorities());

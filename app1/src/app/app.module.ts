@@ -8,45 +8,32 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatButtonModule } from '@angular/material';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { MatButtonModule, MatMenuModule, MatRippleModule, MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthModule } from './auth/auth.module';
 
-import { OAuthModule, OAuthService, AuthConfig, JwksValidationHandler } from 'angular-oauth2-oidc';
-
-import { tap } from 'rxjs/operators';
-
-export function initializeOauthConfig(oauthService: OAuthService, http: HttpClient) {
-  return (): Promise<any> => {
-    return http.get<any>('./assets/oauth.config.json').pipe(tap(r => {
-      const authConfig: AuthConfig = {
-        issuer: r.oauthServer,
-        redirectUri: window.location.origin + '/index.html',
-        clientId: r.clientId
-      };
-      oauthService.configure(authConfig);
-      oauthService.tokenValidationHandler = new JwksValidationHandler();
-      oauthService.loadDiscoveryDocumentAndTryLogin();
-    })).toPromise();
-
-  };
-}
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AuthModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
-    MatButtonModule,
-    OAuthModule.forRoot(),
+    MatToolbarModule, MatSidenavModule, MatIconModule, MatRippleModule, MatMenuModule, MatButtonModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: initializeOauthConfig, deps: [OAuthService, HttpClient], multi: true }
+
   ],
   bootstrap: [AppComponent]
 })

@@ -7,20 +7,9 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app1';
-
-  constructor(private http: HttpClient) {
-
-  }
 
   ngOnInit() {
 
-  }
-
-  onResource2() {
-    this.http.get('/resource2').subscribe(e => {
-      console.log(e);
-    });
   }
 
 }

@@ -1,0 +1,27 @@
+.logo-icon {
+    padding: 0 14px;
+  }
+  
+.topobar-spacer {
+    flex: 1 1 auto;
+}
+
+.button-row a {
+    margin-right: 8px;
+  }
+  
+.logo {
+    margin: 5px;
+    height: 26px;
+    width: 26px;
+    border-radius: 50px;
+}
+
+mat-sidenav a .mat-button {
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-container {
+    flex: 1;
+}
