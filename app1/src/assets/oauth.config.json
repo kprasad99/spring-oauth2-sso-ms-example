@@ -1,0 +1,4 @@
+{
+    "oauthServer": "http://localhost:8080/oauth/authorize",
+    "clientId": "client_2"
+}
