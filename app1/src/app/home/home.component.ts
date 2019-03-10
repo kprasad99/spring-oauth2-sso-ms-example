@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'k-home',
@@ -8,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   username = 'test';
+  result = '';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+  }
+
+  resource1() {
+    this.http.get('/resource1').subscribe(r => console.log(r));
+  }
+
+  resource2() {
+    this.http.get('/resource2').subscribe(r => console.log(r));
   }
 
 }

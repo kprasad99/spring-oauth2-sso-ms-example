@@ -23,7 +23,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule,
+    AuthModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
