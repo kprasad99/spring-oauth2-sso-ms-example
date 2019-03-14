@@ -9,16 +9,16 @@ export class JwtInterceptor implements HttpInterceptor {
         console.log(localStorage.getItem('currentUser'));
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser && currentUser.token) {
-            request = request.clone({
-                setParams: {
-                    access_token: currentUser.token
-                }
-            });
             // request = request.clone({
-            //     setHeaders: {
-            //         Authorization: 'Bearer ' + currentUser.token
+            //     setParams: {
+            //         access_token: currentUser.token
             //     }
             // });
+            request = request.clone({
+                setHeaders: {
+                    Authorization: 'Bearer ' + currentUser.token
+                }
+            });
         }
 
         return next.handle(request);

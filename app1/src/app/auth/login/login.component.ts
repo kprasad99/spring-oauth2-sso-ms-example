@@ -43,12 +43,10 @@ export class LoginComponent implements OnInit {
     const uname = this.loginForm.controls.username.value;
     const password = this.loginForm.controls.password.value;
     this.auth.login(uname, password).subscribe((r: any) => {
-      console.log('token:', r);
       localStorage.setItem('currentUser', JSON.stringify({
         token: r.body.access_token
       }));
     }, e => {
-      console.log(e);
       this.isInProgress = false;
       this.loginForm.setErrors({ loginFailed: true });
     }, () => {

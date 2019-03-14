@@ -24,7 +24,7 @@
           <button mat-raised-button color="primary" style="width: 80%" [disabled]="isInProgress" (click)="onSubmit()">Sign In</button>
         </div>
         <div class="container" style="height: 25px; margin: 12px" fxLayout="row" fxLayoutAlign="center center">
-          <mat-icon *ngIf="isInProgress" mat-font-icon="fa-spinner fa-pulse fa-3x fa-fw" class="fa"></mat-icon>
+          <i *ngIf="isInProgress" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
           <mat-error *ngIf="loginForm.hasError('loginFailed')">
             <strong>login Failed!!</strong>
           </mat-error>

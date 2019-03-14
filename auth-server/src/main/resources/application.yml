@@ -3,4 +3,3 @@
 #    authorization:
 #      jwt:
 #        key-value: "123"
-        

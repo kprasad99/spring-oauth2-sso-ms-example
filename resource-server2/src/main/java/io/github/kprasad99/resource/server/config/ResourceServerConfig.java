@@ -9,11 +9,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @Configuration
 @EnableResourceServer
 @EnableOAuth2Client
-public class ResourceConfig extends ResourceServerConfigurerAdapter {
+public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.anonymous().disable().authorizeRequests().antMatchers("/resource2").hasRole("ADMIN").and()
-				.authorizeRequests().and().csrf().disable();
+		http.anonymous().disable().authorizeRequests().antMatchers("/resource2").hasRole("ADMIN").and().csrf().disable();
 	}
 }

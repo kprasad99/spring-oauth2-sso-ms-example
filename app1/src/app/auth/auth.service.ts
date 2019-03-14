@@ -23,6 +23,6 @@ export class AuthService {
   }
 
   public logout<T>() {
-    this.http.get('/logout', {}).subscribe();
+    this.http.get('/oauth/revoke_token', {}).subscribe();
   }
 }
