@@ -17,7 +17,9 @@ export class HomeComponent implements OnInit {
   }
 
   resource1() {
-    this.http.get('/resource1').subscribe(r => console.log(r));
+    this.http.get('/resource1', {
+      responseType: 'text'
+    }).subscribe(r => this.result = r);
   }
 
   resource2() {
