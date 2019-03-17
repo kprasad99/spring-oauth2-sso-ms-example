@@ -1,0 +1,36 @@
+<div class="container" style="height: 100vh" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card>
+    <mat-card-content>
+      <div class="container" fxLayout="column" fxLayoutAlign="center center">
+        <img class="login-logo" src="../../assets/M.png" />
+        <span class="login-title">MY WEB</span>
+        <span>Single Sign On</span>
+      </div>
+      <form [formGroup]="loginForm" class="login-form">
+        <mat-form-field class="login-field-full-width">
+          <input matInput placeholder="username" formControlName="username">
+          <mat-icon matSuffix>person_identity</mat-icon>
+          <mat-error *ngIf="loginForm.controls.username.hasError('required')">
+            username is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-field-full-width">
+          <input type="password" matInput placeholder="password" formControlName="password">
+          <mat-icon matSuffix>visibility_off</mat-icon>
+          <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+            password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <div class="container" style="margin: 12px" fxLayout="row" fxLayoutAlign="center center">
+          <button mat-raised-button color="primary"  [disabled]="isInProgress" (click)="onSubmit()">Sign In <mat-icon>arrow_right_alt</mat-icon></button>
+        </div>
+        <div class="container" style="height: 25px; margin: 12px" fxLayout="row" fxLayoutAlign="center center">
+          <i *ngIf="isInProgress" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+          <mat-error *ngIf="loginForm.hasError('loginFailed')">
+            <strong>login Failed!!</strong>
+          </mat-error>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
