@@ -19,9 +19,6 @@ import {
 import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';
 
-import { OAuthModule } from 'angular-oauth2-oidc';
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +28,6 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     BrowserModule,
     FlexLayoutModule,
     AuthModule.forRoot(),
-    OAuthModule.forRoot(),
     HttpClientModule,
     MatButtonModule,
     MatMenuModule, MatIconModule, MatRippleModule, MatInputModule, MatToolbarModule, MatSidenavModule,

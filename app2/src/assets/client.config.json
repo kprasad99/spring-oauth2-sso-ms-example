@@ -1,0 +1,5 @@
+{
+    "client" : "uiClient",
+    "state" : "1234567abcdef",
+    "url" : "http://localhost:8080/oauth/authorize"
+}

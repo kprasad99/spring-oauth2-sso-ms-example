@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'k-login',
@@ -11,21 +11,9 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class LoginComponent implements OnInit {
 
-  faSpinner = null;
-  isInProgress = false;
   returnUrl: string;
-  error = '';
 
-  loginForm = new FormGroup({
-    username: new FormControl('', [
-      Validators.required
-    ]),
-    password: new FormControl('', [
-      Validators.required
-    ])
-  });
-
-  constructor(private auth: AuthService, private oauthService: OAuthService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private auth: AuthService, private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     // reset login status
@@ -36,22 +24,31 @@ export class LoginComponent implements OnInit {
     }
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '';
-    // this.login();
-    this.oauthService.initImplicitFlow();
-    console.log('Called');
+    this.login();
   }
 
   login() {
-    this.auth.login().subscribe((r: any) => {
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const token = this.route.snapshot.queryParamMap.get('access_token');
+    if (currentUser && currentUser.token) {
+      this.router.navigateByUrl(this.returnUrl);
+    } else if (token && token !== 'null') {
       localStorage.setItem('currentUser', JSON.stringify({
-        token: r.body.access_token
+        token
       }));
-    }, e => {
-      this.isInProgress = false;
-      this.loginForm.setErrors({ loginFailed: true });
-    }, () => {
-      this.isInProgress = false;
-      this.router.navigate([this.returnUrl]);
-    });
+      this.router.navigateByUrl(this.returnUrl);
+    } else {
+      this.http.get<any>('assets/client.config.json').subscribe(e => {
+        const params = new HttpParams().set('grant_type', 'implicit')
+          .set('client_id', e.client)
+          .set('response_type', 'token')
+          .set('state', e.state)
+          .set('scope', 'read')
+          .set('redirect_uri', encodeURI(location.origin + '/#/login?'));
+        location.href = e.url + '?' + params.toString();
+      });
+    }
+
   }
 }
