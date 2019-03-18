@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'k-login',
@@ -24,25 +25,24 @@ export class LoginComponent implements OnInit {
     ])
   });
 
-  constructor(private auth: AuthService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private auth: AuthService, private oauthService: OAuthService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     // reset login status
-    this.auth.logout();
+    try {
+      this.auth.logout();
+    } catch (err) {
 
+    }
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '';
+    // this.login();
+    this.oauthService.initImplicitFlow();
+    console.log('Called');
   }
 
-  onSubmit() {
-    if (this.loginForm.controls.username.invalid && this.loginForm.controls.username.invalid) {
-      return;
-    }
-    this.loginForm.setErrors({ loginFailed: false });
-    this.isInProgress = true;
-    const uname = this.loginForm.controls.username.value;
-    const password = this.loginForm.controls.password.value;
-    this.auth.login(uname, password).subscribe((r: any) => {
+  login() {
+    this.auth.login().subscribe((r: any) => {
       localStorage.setItem('currentUser', JSON.stringify({
         token: r.body.access_token
       }));

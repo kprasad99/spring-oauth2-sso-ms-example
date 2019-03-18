@@ -9,12 +9,13 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  public login<T>(username: string, password: string): Observable<HttpResponse<T>> {
+  public login<T>(): Observable<HttpResponse<T>> {
     let headers = new HttpHeaders();
     const clientId = 'client_2';
-    const secret = 'secret';
     headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const params = new HttpParams().set('grant_type', 'implicit').set('client_id', 'client_2').set('response_type', 'token').set('scope', 'read');
+    const params = new HttpParams().set('grant_type', 'implicit')
+      .set('client_id', 'client_2').set('response_type', 'token')
+      .set('scope', 'read');
     return this.http.post<T>('/oauth/authorize', params.toString(), {
       headers,
       observe: 'response'
