@@ -1,0 +1,22 @@
+{
+    "/resource2": {
+        "target": "http://localhost:8182",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/resource1": {
+        "target": "http://localhost:8181",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/logout": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/oauth": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}
