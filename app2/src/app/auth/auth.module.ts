@@ -12,7 +12,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { H401Interceptor } from './interceptors/h401.interceptor';
-import { ToekClearInterceptor } from './interceptors/token-clear.interceptor';
+import { TokenClearInterceptor } from './interceptors/token-clear.interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   exports: [LoginComponent],
@@ -38,8 +39,9 @@ export class AuthModule {
       ngModule: AuthModule,
       providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ToekClearInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: TokenClearInterceptor, multi: true },
         // { provide: HTTP_INTERCEPTORS, useClass: H401Interceptor, multi: true },
+        CookieService
       ]
     };
   }

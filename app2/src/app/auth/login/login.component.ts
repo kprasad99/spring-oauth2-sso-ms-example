@@ -3,6 +3,8 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'k-login',
@@ -13,18 +15,25 @@ export class LoginComponent implements OnInit {
 
   returnUrl: string;
 
-  constructor(private auth: AuthService, private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
+  constructor(
+    private auth: AuthService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
+    private cookieService: CookieService) { }
 
   ngOnInit() {
     // reset login status
-    try {
-      this.auth.logout();
-    } catch (err) {
-
-    }
-    // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '';
-    this.login();
+    this.auth.logout().subscribe(e => {
+      this.cookieService.deleteAll();
+      this.login();
+    },
+      e => {
+        this.cookieService.deleteAll();
+        this.login();
+      }
+    );
   }
 
   login() {

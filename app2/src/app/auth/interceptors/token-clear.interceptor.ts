@@ -3,20 +3,39 @@
 
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { AuthService } from '../auth.service';
+import { tap } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
-export class ToekClearInterceptor implements HttpInterceptor {
+export class TokenClearInterceptor implements HttpInterceptor {
 
-    constructor(private authService: AuthService) { }
+    constructor(private cookieService: CookieService) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(tap(req => {
-            if (request.url === '/oauth/revoke_token') {
-                localStorage.removeItem('currentUser');
-            }
-        }));
+    intercept(req: HttpRequest<any>, next: HttpHandler) {
+
+        return next.handle(req).pipe(
+            tap(
+                event => {
+                    status = '';
+                    if (event instanceof HttpResponse) {
+                        const response: HttpResponse<any> = event;
+                        const url: string = response.url || '';
+                        if (url.endsWith('/logout')) {
+                            this.clearToken();
+                        }
+                    }
+                },
+                error => {
+                    const url: string = error.url || '';
+                    if (url.endsWith('/logout') || url.endsWith('/login?logout')) {
+                        this.clearToken();
+                    }
+                }
+            )
+        );
+    }
+    private clearToken() {
+        localStorage.removeItem('currentUser');
+        this.cookieService.delete('JSESSIONID');
     }
 }

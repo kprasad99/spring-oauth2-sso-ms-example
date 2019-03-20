@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.requestMatchers().antMatchers("/login", "/oauth/authorize").and().authorizeRequests().anyRequest()
-				.authenticated().and().formLogin().permitAll().and().csrf().disable().cors().disable();
+				.authenticated().and().formLogin().permitAll().and().logout().permitAll().and().csrf().disable().cors().disable();
 	}
 
 	@Override
@@ -58,20 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(4);
-	}
-
-	@Bean(name = "corsConfigurationSource")
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT"));
-		configuration.setAllowedHeaders(Arrays.asList("Cache-Control", "Authorization", "Content-Type", "content-type",
-				"x-requested-with", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "x-auth-token",
-				"x-app-id", "Origin", "Accept", "X-Requested-With", "Access-Control-Request-Method",
-				"Access-Control-Request-Headers"));
-		configuration.setAllowCredentials(true);
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		return source;
 	}
 
 }

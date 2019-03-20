@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   public login<T>(): Observable<HttpResponse<T>> {
     let headers = new HttpHeaders();
@@ -23,6 +24,7 @@ export class AuthService {
   }
 
   public logout<T>() {
-    this.http.get('/oauth/revoke_token', {}).subscribe();
+    this.cookieService.deleteAll();
+    return this.http.get('/logout', { observe: 'response', withCredentials: true });
   }
 }
